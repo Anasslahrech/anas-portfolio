@@ -22,9 +22,9 @@ export const profile = {
   about: [
     "Ingénieur en Génie Informatique, option Intelligence Artificielle et Data Science (ISMAGI), titulaire d'une Licence Professionnelle en Développement Web et Mobile (2025).",
     "J'ai une solide expérience pratique du développement full-stack (web, mobile, API) et du Machine Learning, Deep Learning et NLP, acquise à travers plusieurs projets académiques et mon Projet de Fin d'Études (PFE) 2025-2026.",
-    "Je recherche un poste de développeur / data scientist / stage PFE  pour contribuer à des projets innovants à forte valeur ajoutée.",
+    "Je recherche un poste de développeur / data scientist pour contribuer à des projets innovants à forte valeur ajoutée.",
   ],
-  available: 'Disponible pour un poste / stage PFE ',
+  available: 'Disponible : Stage PFE',
 }
 
 export const stats = [
@@ -211,9 +211,9 @@ export const education = [
 ]
 
 export const languages = [
-  { name: 'Arabe', level: 'Langue maternelle', percent: 100 },
-  { name: 'Français', level: 'Courant — C1', percent: 88 },
-  { name: 'Anglais', level: 'Intermédiaire — B1/B2', percent: 65 },
+  { name: 'Arabe', code: 'AR', level: 'Langue maternelle', percent: 100 },
+  { name: 'Français', code: 'FR', level: 'Courant · C1', percent: 88 },
+  { name: 'Anglais', code: 'EN', level: 'Intermédiaire · B1/B2', percent: 65 },
 ]
 
 export const qualities = [

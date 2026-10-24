@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useActiveSection } from '../hooks'
 import { profile } from '../data'
 
@@ -15,9 +15,28 @@ const ids = links.map((l) => l.id)
 export default function Navbar({ theme, toggleTheme }) {
   const [open, setOpen] = useState(false)
   const active = useActiveSection(ids)
+  const bar = useRef(null)
+  const [scrolled, setScrolled] = useState(false)
+
+  // Barre de progression de lecture + barre qui se réduit au défilement
+  useEffect(() => {
+    const on = () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight
+      const p = h > 0 ? window.scrollY / h : 0
+      bar.current?.style.setProperty('--sp', p.toFixed(4))
+      setScrolled(window.scrollY > 24)
+    }
+    on()
+    window.addEventListener('scroll', on, { passive: true })
+    window.addEventListener('resize', on)
+    return () => {
+      window.removeEventListener('scroll', on)
+      window.removeEventListener('resize', on)
+    }
+  }, [])
 
   return (
-    <header className="navbar">
+    <header className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="container nav-inner">
         <a href="#accueil" className="logo" aria-label="Retour à l'accueil">
           <span className="logo-mark">AL</span>
@@ -56,6 +75,7 @@ export default function Navbar({ theme, toggleTheme }) {
           </button>
         </div>
       </div>
+      <div ref={bar} className="nav-progress" />
     </header>
   )
 }

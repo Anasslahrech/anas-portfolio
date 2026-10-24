@@ -7,12 +7,15 @@ import Projects from './components/Projects'
 import Journey from './components/Journey'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import { CursorGlow, BackToTop } from './components/Extras'
+import './components/sections.css'
 
 export default function App() {
   const [theme, toggleTheme] = useTheme()
 
   return (
     <>
+      <CursorGlow />
       <Navbar theme={theme} toggleTheme={toggleTheme} />
       <main>
         <Hero />
@@ -23,6 +26,7 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <BackToTop />
     </>
   )
 }

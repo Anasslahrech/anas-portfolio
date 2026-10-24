@@ -1,48 +1,80 @@
 import Section from './Section'
+import Fx from './Fx'
 import { profile, qualities, languages } from '../data'
+
+function Ring({ code, name, level, percent }) {
+  return (
+    <div className="ring">
+      <div className="ring-svg">
+        <svg viewBox="0 0 80 80" aria-hidden="true">
+          <defs>
+            <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" style={{ stopColor: 'var(--accent)' }} />
+              <stop offset="100%" style={{ stopColor: 'var(--accent-2)' }} />
+            </linearGradient>
+          </defs>
+          <circle className="ring-bg" cx="40" cy="40" r="34" pathLength="100" />
+          <circle className="ring-fg" cx="40" cy="40" r="34" pathLength="100" style={{ '--p': percent }} />
+        </svg>
+        <strong>{code}</strong>
+      </div>
+      <span className="ring-name">{name}</span>
+      <span className="ring-level">{level}</span>
+    </div>
+  )
+}
 
 export default function About() {
   return (
-    <Section id="apropos" eyebrow="01 — À propos" title="Qui suis-je ?">
-      <div className="about-grid">
-        <div className="about-text">
-          {profile.about.map((p, i) => (
-            <p key={i}>{p}</p>
-          ))}
-          <ul className="meta-list">
-            <li>
+    <Section id="apropos" num="01" eyebrow="À propos" title="Qui suis-je ?" alt>
+      <div className="ab-grid">
+        <div className="ab-text">
+          <p className="ab-lead rv l" style={{ '--i': 0 }}>
+            {profile.about[0]}
+          </p>
+          <p className="rv l" style={{ '--i': 1 }}>
+            {profile.about[1]}
+          </p>
+          <p className="rv l" style={{ '--i': 2 }}>
+            {profile.about[2]}
+          </p>
+
+          <ul className="ab-meta">
+            <li className="rv l" style={{ '--i': 3 }}>
               <span>📍</span> {profile.location}
             </li>
-            <li>
-              <span>🎓</span> ISMAGI — Cycle Ingénieur 2023–2026
+            <li className="rv l" style={{ '--i': 4 }}>
+              <span>🎓</span> ISMAGI · Cycle Ingénieur 2023-2026
             </li>
-            <li>
+            <li className="rv l" style={{ '--i': 5 }}>
               <span>✉️</span> <a href={`mailto:${profile.email}`}>{profile.email}</a>
             </li>
           </ul>
         </div>
 
-        <div className="card about-side">
-          <h3>Langues</h3>
-          {languages.map((l) => (
-            <div key={l.name} className="lang">
-              <div className="lang-head">
-                <strong>{l.name}</strong>
-                <span>{l.level}</span>
+        <div className="ab-side">
+          <div className="rv r" style={{ '--i': 1 }}>
+            <Fx className="ab-card">
+              <h3>Langues</h3>
+              <div className="rings">
+                {languages.map((l) => (
+                  <Ring key={l.name} {...l} />
+                ))}
               </div>
-              <div className="bar" role="progressbar" aria-valuenow={l.percent} aria-valuemin="0" aria-valuemax="100">
-                <div className="bar-fill" style={{ width: `${l.percent}%` }} />
-              </div>
-            </div>
-          ))}
+            </Fx>
+          </div>
 
-          <h3 style={{ marginTop: '1.5rem' }}>Qualités</h3>
-          <div className="chips">
-            {qualities.map((q) => (
-              <span key={q} className="chip">
-                {q}
-              </span>
-            ))}
+          <div className="rv r" style={{ '--i': 2 }}>
+            <Fx className="ab-card">
+              <h3>Qualités</h3>
+              <div className="sx-chips">
+                {qualities.map((q, i) => (
+                  <span key={q} className="sx-chip" style={{ '--c': i }}>
+                    {q}
+                  </span>
+                ))}
+              </div>
+            </Fx>
           </div>
         </div>
       </div>

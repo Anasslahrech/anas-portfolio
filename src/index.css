@@ -776,3 +776,144 @@ ul {
     animation: none;
   }
 }
+
+/* =====================================================
+   NOUVEAU DESIGN — ACCUEIL (aurora, slides, vagues)
+   ===================================================== */
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+  padding: 5rem 0 9rem;
+  isolation: isolate;
+}
+.hero .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Fond aurore animé */
+.aurora {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.45;
+  will-change: transform;
+}
+.b1 {
+  width: 520px; height: 520px; left: -140px; top: -120px;
+  background: var(--accent);
+  animation: drift1 18s ease-in-out infinite alternate;
+}
+.b2 {
+  width: 480px; height: 480px; right: -120px; top: 0;
+  background: var(--accent-2);
+  animation: drift2 22s ease-in-out infinite alternate;
+}
+.b3 {
+  width: 360px; height: 360px; left: 40%; bottom: 10%;
+  background: color-mix(in srgb, var(--accent) 60%, var(--accent-2));
+  opacity: 0.28;
+  animation: drift3 26s ease-in-out infinite alternate;
+}
+@keyframes drift1 { to { transform: translate(160px, 120px) scale(1.15); } }
+@keyframes drift2 { to { transform: translate(-180px, 140px) scale(0.9); } }
+@keyframes drift3 { to { transform: translate(-140px, -90px) scale(1.2); } }
+
+/* Slides d'entrée */
+.slide-left,
+.slide-right,
+.slide-up {
+  opacity: 0;
+  animation-duration: 0.9s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-fill-mode: forwards;
+  animation-delay: var(--d, 0.2s);
+}
+.slide-left { animation-name: slideLeft; }
+.slide-right { animation-name: slideRight; --d: 0.3s; }
+.slide-up { animation-name: slideUp; }
+@keyframes slideLeft { from { opacity: 0; transform: translateX(-70px); } to { opacity: 1; transform: none; } }
+@keyframes slideRight { from { opacity: 0; transform: translateX(90px) scale(0.92); } to { opacity: 1; transform: none; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: none; } }
+
+/* Avatar + anneau + tags flottants */
+.avatar-wrap { width: min(340px, 72vw); }
+.avatar-ring {
+  position: absolute;
+  inset: -22px;
+  border-radius: 50%;
+  border: 2px dashed color-mix(in srgb, var(--accent) 55%, transparent);
+  animation: spin 30s linear infinite reverse;
+}
+.float-chip {
+  position: absolute;
+  z-index: 3;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text);
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow);
+  animation: bob 5s ease-in-out infinite;
+}
+.f1 { top: 2%;  left: -14%; animation-delay: 0s; }
+.f2 { top: 14%; right: -16%; animation-delay: 0.8s; }
+.f3 { bottom: 12%; left: -18%; animation-delay: 1.6s; }
+.f4 { bottom: 2%; right: -10%; animation-delay: 2.4s; }
+@keyframes bob { 50% { transform: translateY(-12px); } }
+
+/* Cartes de stats */
+.stats { margin-top: 3.5rem; }
+.stat {
+  backdrop-filter: blur(10px);
+  background: color-mix(in srgb, var(--surface) 80%, transparent);
+  transition: transform 0.25s, border-color 0.25s;
+}
+.stat:hover { transform: translateY(-6px); border-color: var(--accent); }
+
+/* Vagues animées en bas */
+.waves {
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 130px;
+  z-index: 1;
+  pointer-events: none;
+}
+.wave {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 200%;
+  height: 100%;
+  animation: waveMove linear infinite;
+}
+.wave path { stroke: none; }
+.w1 { animation-duration: 28s; opacity: 0.35; }
+.w1 path { fill: var(--accent); }
+.w2 { animation-duration: 20s; animation-direction: reverse; opacity: 0.35; height: 82%; }
+.w2 path { fill: var(--accent-2); }
+.w3 { animation-duration: 14s; height: 58%; }
+.w3 path { fill: var(--bg); }
+@keyframes waveMove { to { transform: translateX(-50%); } }
+
+@media (max-width: 900px) {
+  .hero { padding-bottom: 7rem; }
+  .float-chip { display: none; }
+  .avatar-wrap { width: min(210px, 55vw); }
+  .avatar-ring { inset: -14px; }
+  .waves { height: 90px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .blob, .wave, .avatar-ring, .float-chip { animation: none; }
+  .slide-left, .slide-right, .slide-up { opacity: 1; animation: none; }
+}
