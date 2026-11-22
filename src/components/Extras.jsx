@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useLang } from '../i18n'
 
 // Halo lumineux qui suit la souris sur tout le site (écrans avec souris uniquement)
 export function CursorGlow() {
@@ -31,6 +32,7 @@ export function CursorGlow() {
 
 // Bouton « retour en haut »
 export function BackToTop() {
+  const { ui } = useLang().d
   const [show, setShow] = useState(false)
   useEffect(() => {
     const on = () => setShow(window.scrollY > 700)
@@ -39,7 +41,7 @@ export function BackToTop() {
     return () => window.removeEventListener('scroll', on)
   }, [])
   return (
-    <a href="#accueil" className={`btt ${show ? 'show' : ''}`} aria-label="Retour en haut de page">
+    <a href="#accueil" className={`btt ${show ? 'show' : ''}`} aria-label={ui.backToTop}>
       ↑
     </a>
   )

@@ -1,6 +1,6 @@
 import Section from './Section'
 import Fx from './Fx'
-import { profile, qualities, languages } from '../data'
+import { useLang } from '../i18n'
 
 function Ring({ code, name, level, percent }) {
   return (
@@ -25,8 +25,9 @@ function Ring({ code, name, level, percent }) {
 }
 
 export default function About() {
+  const { profile, qualities, languages, ui } = useLang().d
   return (
-    <Section id="apropos" num="01" eyebrow="À propos" title="Qui suis-je ?" alt>
+    <Section id="apropos" num="01" eyebrow={ui.about.eyebrow} title={ui.about.title} alt>
       <div className="ab-grid">
         <div className="ab-text">
           <p className="ab-lead rv l" style={{ '--i': 0 }}>
@@ -44,7 +45,7 @@ export default function About() {
               <span>📍</span> {profile.location}
             </li>
             <li className="rv l" style={{ '--i': 4 }}>
-              <span>🎓</span> ISMAGI · Cycle Ingénieur 2023-2026
+              <span>🎓</span> {ui.about.school}
             </li>
             <li className="rv l" style={{ '--i': 5 }}>
               <span>✉️</span> <a href={`mailto:${profile.email}`}>{profile.email}</a>
@@ -55,7 +56,7 @@ export default function About() {
         <div className="ab-side">
           <div className="rv r" style={{ '--i': 1 }}>
             <Fx className="ab-card">
-              <h3>Langues</h3>
+              <h3>{ui.about.languages}</h3>
               <div className="rings">
                 {languages.map((l) => (
                   <Ring key={l.name} {...l} />
@@ -66,7 +67,7 @@ export default function About() {
 
           <div className="rv r" style={{ '--i': 2 }}>
             <Fx className="ab-card">
-              <h3>Qualités</h3>
+              <h3>{ui.about.qualities}</h3>
               <div className="sx-chips">
                 {qualities.map((q, i) => (
                   <span key={q} className="sx-chip" style={{ '--c': i }}>

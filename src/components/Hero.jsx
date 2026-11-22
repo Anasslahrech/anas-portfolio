@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { profile, stats } from '../data'
+import { useLang } from '../i18n'
 import { useTyping } from '../hooks'
 import NeuralBg from './NeuralBg'
 import Marquee from './Marquee'
@@ -7,12 +7,6 @@ import './hero.css'
 
 const orbit = ['Python', 'React', 'FastAPI', 'TensorFlow', 'Laravel', 'spaCy']
 
-const termLines = [
-  { t: '$ python predict.py', c: 'cmd' },
-  { t: '> RandomForest + SHAP', c: '' },
-  { t: '> score = 0.87', c: 'ok' },
-  { t: '✓ succès probable', c: 'ok' },
-]
 
 // Titre : chaque lettre monte de son masque, l'une après l'autre
 function Letters({ text, start = 0, className = '' }) {
@@ -66,6 +60,13 @@ function Count({ value }) {
 }
 
 function Stage() {
+  const { profile, ui } = useLang().d
+  const termLines = [
+    { t: '$ python predict.py', c: 'cmd' },
+    { t: '> RandomForest + SHAP', c: '' },
+    { t: '> score = 0.87', c: 'ok' },
+    { t: ui.hero.success, c: 'ok' },
+  ]
   const ref = useRef(null)
   const [failed, setFailed] = useState(false)
 
@@ -90,7 +91,7 @@ function Stage() {
         </defs>
         <text>
           <textPath href="#hx-circ" textLength="497" lengthAdjust="spacing">
-            INGÉNIEUR IA • DATA SCIENCE • FULL-STACK • MACHINE LEARNING •
+            {ui.hero.ring}
           </textPath>
         </text>
       </svg>
@@ -109,7 +110,7 @@ function Stage() {
           {failed ? (
             <div className="hx-fallback">AL</div>
           ) : (
-            <img src={profile.photo} alt={`Portrait de ${profile.name}`} onError={() => setFailed(true)} />
+            <img src={profile.photo} alt={`${ui.hero.portrait} ${profile.name}`} onError={() => setFailed(true)} />
           )}
         </div>
       </div>
@@ -146,6 +147,7 @@ function Waves() {
 }
 
 export default function Hero() {
+  const { profile, stats, ui } = useLang().d
   const typed = useTyping(profile.roles)
   const root = useRef(null)
   const [first, ...rest] = profile.name.split(' ')
@@ -171,7 +173,7 @@ export default function Hero() {
           </span>
 
           <p className="hx-hello hx-in" style={{ '--d': '0.2s' }}>
-            &lt;Bonjour, je suis /&gt;
+            {ui.hero.hello}
           </p>
 
           <h1 className="hx-title" aria-label={profile.name}>
@@ -189,20 +191,20 @@ export default function Hero() {
 
           <div className="cta-row hx-in" style={{ '--d': '1.2s' }}>
             <a href="#projets" className="btn btn-primary hx-shine">
-              Voir mes projets
+              {ui.hero.projects}
             </a>
             <a href={profile.cv} download className="btn btn-ghost">
-              Télécharger mon CV
+              {ui.hero.cv}
             </a>
             <a href="#contact" className="btn btn-link">
-              Me contacter →
+              {ui.hero.contact}
             </a>
           </div>
 
           <div className="socials hx-in" style={{ '--d': '1.3s' }}>
             <a href={profile.github} target="_blank" rel="noreferrer">GitHub</a>
             <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
-            <a href={`mailto:${profile.email}`}>E-mail</a>
+            <a href={`mailto:${profile.email}`}>{ui.hero.email}</a>
           </div>
         </div>
 

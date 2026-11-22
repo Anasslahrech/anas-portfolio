@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import Section from './Section'
 import Fx from './Fx'
 import { useReveal } from '../hooks'
-import { experience, education } from '../data'
+import { useLang } from '../i18n'
 
 // Frise dont le trait lumineux se dessine au fil du défilement
 function Timeline({ children }) {
@@ -44,12 +44,13 @@ function TlItem({ children }) {
 }
 
 export default function Journey() {
+  const { experience, education, ui } = useLang().d
   return (
-    <Section id="parcours" num="04" eyebrow="Parcours" title="Expérience & Formation" alt prev="bg">
+    <Section id="parcours" num="04" eyebrow={ui.journey.eyebrow} title={ui.journey.title} alt prev="bg">
       <div className="jn-grid">
         <div className="rv l" style={{ '--i': 0 }}>
           <h3 className="jn-title">
-            <span>💼</span> Expérience
+            <span>💼</span> {ui.journey.experience}
           </h3>
           <Timeline>
             {experience.map((e) => (
@@ -80,7 +81,7 @@ export default function Journey() {
 
         <div className="rv r" style={{ '--i': 1 }}>
           <h3 className="jn-title">
-            <span>🎓</span> Formation
+            <span>🎓</span> {ui.journey.education}
           </h3>
           <Timeline>
             {education.map((e) => (

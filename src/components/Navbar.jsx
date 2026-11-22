@@ -1,18 +1,20 @@
 import { useEffect, useRef, useState } from 'react'
 import { useActiveSection } from '../hooks'
-import { profile } from '../data'
+import { useLang } from '../i18n'
 
-const links = [
-  { id: 'accueil', label: 'Accueil' },
-  { id: 'apropos', label: 'À propos' },
-  { id: 'competences', label: 'Compétences' },
-  { id: 'projets', label: 'Projets' },
-  { id: 'parcours', label: 'Parcours' },
-  { id: 'contact', label: 'Contact' },
-]
-const ids = links.map((l) => l.id)
+const ids = ['accueil', 'apropos', 'competences', 'projets', 'parcours', 'contact']
 
 export default function Navbar({ theme, toggleTheme }) {
+  const { toggleLang, d } = useLang()
+  const { profile, ui } = d
+  const links = [
+    { id: 'accueil', label: ui.nav.home },
+    { id: 'apropos', label: ui.nav.about },
+    { id: 'competences', label: ui.nav.skills },
+    { id: 'projets', label: ui.nav.projects },
+    { id: 'parcours', label: ui.nav.journey },
+    { id: 'contact', label: ui.nav.contact },
+  ]
   const [open, setOpen] = useState(false)
   const active = useActiveSection(ids)
   const bar = useRef(null)
@@ -38,12 +40,12 @@ export default function Navbar({ theme, toggleTheme }) {
   return (
     <header className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="container nav-inner">
-        <a href="#accueil" className="logo" aria-label="Retour à l'accueil">
+        <a href="#accueil" className="logo" aria-label={ui.nav.logoLabel}>
           <span className="logo-mark">AL</span>
           <span className="logo-text">{profile.name}</span>
         </a>
 
-        <nav className={`nav-links ${open ? 'open' : ''}`} aria-label="Navigation principale">
+        <nav className={`nav-links ${open ? 'open' : ''}`} aria-label={ui.nav.mainNav}>
           {links.map((l) => (
             <a
               key={l.id}
@@ -59,16 +61,25 @@ export default function Navbar({ theme, toggleTheme }) {
         <div className="nav-actions">
           <button
             className="icon-btn"
+            onClick={toggleLang}
+            aria-label={ui.nav.langLabel}
+            title={ui.nav.langLabel}
+            style={{ fontWeight: 700, fontSize: '0.8rem' }}
+          >
+            {ui.nav.langBtn}
+          </button>
+          <button
+            className="icon-btn"
             onClick={toggleTheme}
-            aria-label={theme === 'dark' ? 'Passer en mode clair' : 'Passer en mode sombre'}
-            title="Changer de thème"
+            aria-label={theme === 'dark' ? ui.nav.toLight : ui.nav.toDark}
+            title={ui.nav.theme}
           >
             {theme === 'dark' ? '☀️' : '🌙'}
           </button>
           <button
             className="icon-btn burger"
             onClick={() => setOpen((o) => !o)}
-            aria-label="Ouvrir le menu"
+            aria-label={ui.nav.menu}
             aria-expanded={open}
           >
             {open ? '✕' : '☰'}

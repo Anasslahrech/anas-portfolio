@@ -1,13 +1,14 @@
 import Section from './Section'
 import Fx from './Fx'
-import { skills } from '../data'
+import { useLang } from '../i18n'
 
 // Taille de chaque carte dans la grille « bento » (total de 6 colonnes par ligne)
-const spans = [4, 2, 3, 3, 2, 2, 2, 3, 3]
+const spans = [4, 2, 2, 2, 2, 3, 3, 2, 2, 2]
 
 export default function Skills() {
+  const { skills, ui } = useLang().d
   return (
-    <Section id="competences" num="02" eyebrow="Compétences" title="Ma boîte à outils" prev="alt">
+    <Section id="competences" num="02" eyebrow={ui.skills.eyebrow} title={ui.skills.title} prev="alt">
       <div className="sk-grid">
         {skills.map((group, gi) => (
           <div key={group.title} className="sk-w rv" style={{ '--span': spans[gi] ?? 3, '--i': gi }}>

@@ -1,17 +1,13 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Section from './Section'
 import Fx from './Fx'
-import { projects, otherProjects, profile } from '../data'
-
-const filters = [
-  { id: 'all', label: 'Tous' },
-  { id: 'ia', label: 'IA & Data' },
-  { id: 'web', label: 'Web' },
-  { id: 'mobile', label: 'Mobile' },
-]
-const catLabel = { ia: 'IA & Data', web: 'Web', mobile: 'Mobile' }
+import { useLang } from '../i18n'
 
 export default function Projects() {
+  const { projects, otherProjects, profile, ui } = useLang().d
+  const t = ui.projects
+  const filters = ['all', 'ia', 'web', 'mobile'].map((id) => ({ id, label: t.filters[id] }))
+  const catLabel = t.filters
   const [filter, setFilter] = useState('all')
   const [showOthers, setShowOthers] = useState(false)
 
@@ -34,8 +30,8 @@ export default function Projects() {
   const others = otherProjects.filter((p) => filter === 'all' || p.category === filter)
 
   return (
-    <Section id="projets" num="03" eyebrow="Projets" title="Ce que j'ai construit" prev="bg">
-      <div className="pj-filters rv" ref={wrap} role="tablist" aria-label="Filtrer les projets">
+    <Section id="projets" num="03" eyebrow={t.eyebrow} title={t.title} prev="bg">
+      <div className="pj-filters rv" ref={wrap} role="tablist" aria-label={t.filterLabel}>
         <span className="pj-ind" style={{ left: ind.left, width: ind.width }} />
         {filters.map((f) => (
           <button
@@ -89,13 +85,13 @@ export default function Projects() {
             </Fx>
           </div>
         ))}
-        {list.length === 0 && <p className="pj-empty">Aucun projet principal dans cette catégorie.</p>}
+        {list.length === 0 && <p className="pj-empty">{t.empty}</p>}
       </div>
 
       {others.length > 0 && (
         <div className="pj-others">
           <button className="btn btn-ghost" onClick={() => setShowOthers((s) => !s)} aria-expanded={showOthers}>
-            {showOthers ? 'Masquer' : 'Voir'} les autres projets Web & Mobile ({others.length})
+            {showOthers ? t.hide : t.show} {t.others} ({others.length})
             <span className={`pj-caret ${showOthers ? 'open' : ''}`}>▾</span>
           </button>
 
@@ -116,9 +112,9 @@ export default function Projects() {
       )}
 
       <p className="pj-more rv" style={{ '--i': 3 }}>
-        Plus de code sur{' '}
+        {t.moreBefore}{' '}
         <a href={profile.github} target="_blank" rel="noreferrer">
-          mon GitHub
+          {t.moreLink}
         </a>
         .
       </p>
